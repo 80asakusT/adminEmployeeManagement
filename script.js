@@ -40,8 +40,8 @@ function renderEmployees(listEmployees) {
 
 renderEmployees(employees);
 
-// Làm sao để lấy được giá trị của input Name
+// Làm sao để lấy được giá trị của input Name => value
 
-// Khi click nút Apply Filters
+// Khi click nút Apply Filters => addEventListener("click", () => {})
 
 // cần hàm filterEmployess(cần 1 danh sách nhân viên theo điều kiện đã lọc)
