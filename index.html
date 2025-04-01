@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Podkova:wght@400..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        color: #333333;
+      }
+
+      header {
+        background-color: #ff8c00;
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .section {
+        margin-bottom: 2.5rem;
+      }
+
+      .section h2 {
+        margin-bottom: 1.5rem;
+        color: #ff8c00;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #ff8c00;
+        display: inline-block;
+        padding-bottom: 0.3rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #333333;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #ff8c00;
+        box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        color: white;
+        background-color: #ff8c00;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #e67e00;
+      }
+
+      .filter-options {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .employee-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+      }
+
+      .employee-table th,
+      .employee-table td {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        text-align: left;
+        font-size: 0.95rem;
+      }
+
+      .employee-table th {
+        background-color: #ff8c00;
+        color: white;
+        font-weight: bold;
+      }
+
+      .employee-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .employee-table tr:hover {
+        background-color: #ffe5cc;
+      }
+
+      .employee-table td {
+        color: #333333;
+      }
+
+      h3 {
+        color: #333333;
+        margin-top: 2rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Employee Management System</h1>
+    </header>
+
+    <div class="container">
+      <div class="section">
+        <h2>Filter Employees</h2>
+        <div class="filter-options">
+          <div class="filter-group">
+            <label for="filterDepartment">Department</label>
+            <select>
+              <option value="1">HR</option>
+              <option value="2">IT</option>
+              <option value="3">Finance</option>
+              <option value="4">Marketing</option>
+              <option value="5">Operations</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterAge">Age</label>
+            <input type="number" id="filterAge" name="filterAge" />
+          </div>
+          <div class="filter-group">
+            <label for="filterSalary">Salary</label>
+            <input type="number" id="filterSalary" name="filterSalary" />
+          </div>
+          <button class="btn" id="applyFilters">Apply Filters</button>
+        </div>
+
+        <!-- Sample Data Table -->
+        <h3>Employee List</h3>
+        <table class="employee-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Department</th>
+              <th>Salary</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Alice</td>
+              <td>28</td>
+              <td>IT</td>
+              <td>3000</td>
+              <td><div style="width: 100%; display: flex;justify-content: center;"><i class="fa-solid fa-pen"></i></div></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Bob</td>
+              <td>34</td>
+              <td>HR</td>
+              <td>3500</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Charlie</td>
+              <td>25</td>
+              <td>IT</td>
+              <td>2800</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>David</td>
+              <td>45</td>
+              <td>Finance</td>
+              <td>4000</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Eve</td>
+              <td>30</td>
+              <td>IT</td>
+              <td>3200</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="section">
+        <h2>Add Employee</h2>
+        <form id="addEmployeeForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" required />
+          </div>
+          <div class="form-group">
+            <label for="department">Department</label>
+            <input type="text" id="department" name="department" required />
+          </div>
+          <div class="form-group">
+            <label for="salary">Salary</label>
+            <input type="number" id="salary" name="salary" required />
+          </div>
+          <button type="submit" class="btn">Add Employee</button>
+        </form>
+      </div>
+
+      <div class="section">
+        <h2>Update Employee</h2>
+        <form id="updateEmployeeForm">
+          <div class="form-group">
+            <label for="updateId">Employee ID</label>
+            <input type="number" id="updateId" name="updateId" required />
+          </div>
+          <div class="form-group">
+            <label for="updateField">Field to Update</label>
+            <select id="updateField" name="updateField" required>
+              <option value="name">Name</option>
+              <option value="age">Age</option>
+              <option value="department">Department</option>
+              <option value="salary">Salary</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="updateValue">New Value</label>
+            <input type="text" id="updateValue" name="updateValue" required />
+          </div>
+          <button type="submit" class="btn">Update Employee</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
