@@ -59,6 +59,7 @@
       }
 
       .form-group {
+        width: 100%;
         margin-bottom: 1.5rem;
       }
 
@@ -147,6 +148,12 @@
         font-size: 1.3rem;
         font-weight: bold;
       }
+
+      .msg-err {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+      }
     </style>
   </head>
   <body>
@@ -160,11 +167,11 @@
         <div class="filter-options">
           <div class="filter-group">
             <label for="filterAge">Name</label>
-            <input type="text" id="filterName" name="filterName"/>
+            <input type="text" id="filterName" name="filterName" />
           </div>
           <div class="filter-group">
             <label for="filterDepartment">Department</label>
-            <select id = "departments">
+            <select id="departments">
               <option value="">All</option>
               <option value="1">HR</option>
               <option value="2">IT</option>
@@ -205,21 +212,31 @@
         <form id="addEmployeeForm">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="nameAdd" name="name" required />
+            <input type="text" id="nameAdd" name="name" />
+            <p class="msg-err" id="errName">Lỗi</p>
           </div>
           <div class="form-group">
             <label for="age">Age</label>
-            <input type="number" id="ageAdd" name="age" required />
+            <input type="number" id="ageAdd" name="age" />
+            <p class="msg-err" id="errAge"></p>
           </div>
           <div class="form-group">
-            <label for="department">Department</label>
-            <input type="text" id="departmentAdd" name="department" required />
+            <label for="filterDepartment">Department</label>
+            <select id="departmentAdd" name="add-department">
+              <option value="1">HR</option>
+              <option value="2">IT</option>
+              <option value="3">Finance</option>
+              <option value="4">Marketing</option>
+              <option value="5">Operations</option>
+            </select>
+            <p class="msg-err" id="errDepartment"></p>
           </div>
           <div class="form-group">
             <label for="salary">Salary</label>
-            <input type="number" id="salaryAdd" name="salary" required />
+            <input type="number" id="salaryAdd" name="salary" />
+            <p class="msg-err" id="errSalary"></p>
           </div>
-          <button type="submit" class="btn" id ="add">Add Employee</button>
+          <button type="submit" class="btn" id="add">Add Employee</button>
         </form>
       </div>
 
