@@ -59,37 +59,37 @@ const employees = [
 // console.log(advancedSearch);
 
 // 3
-function processEmployees(arr){
-  let newArr = arr.map((employee) => {
-    if (employee.department == "HR") employee.salary += employee.salary*15/100;
-    return employee;
-  });
-  let filtered = newArr.filter((employee) => employee.salary > 3500);
-  return filtered.sort((employee1, employee2) => employee2.age - employee1.age);
-}
+// function processEmployees(arr){
+//   let newArr = arr.map((employee) => {
+//     if (employee.department == "HR") employee.salary += employee.salary*15/100;
+//     return employee;
+//   });
+//   let filtered = newArr.filter((employee) => employee.salary > 3500);
+//   return filtered.sort((employee1, employee2) => employee2.age - employee1.age);
+// }
 
-const processed = processEmployees(employees);
-console.log(processed);
+// const processed = processEmployees(employees);
+// console.log(processed);
 
 // 4
 
-function updateEmployee(arr, index, criteria){}
+// function updateEmployee(arr, index, criteria){}
 
-const updatedEmployees = updateEmployee(employees, 3, (emp) => ({
-  ...emp,
-  age: emp.age + 1,
-  salary: emp.salary + 200,
-}));
-console.log(updatedEmployees);
+// const updatedEmployees = updateEmployee(employees, 3, (emp) => ({
+//   ...emp,
+//   age: emp.age + 1,
+//   salary: emp.salary + 200,
+// }));
+// console.log(updatedEmployees);
 
-// 5
-function removeEmployees(arr, criteria){
-  let res = arr;
-  for(key in criteria){
-    res = res.filter((employee) => employee[key] != criteria[key]);
-  }
-  return res;
-}
+// // 5
+// function removeEmployees(arr, criteria){
+//   let res = arr;
+//   for(key in criteria){
+//     res = res.filter((employee) => employee[key] != criteria[key]);
+//   }
+//   return res;
+// }
 
 // const remainingEmployees = removeEmployees(employees, {
 //   department: "Finance",

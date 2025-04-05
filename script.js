@@ -42,6 +42,31 @@ renderEmployees(employees);
 
 // Làm sao để lấy được giá trị của input Name => value
 
+
+
 // Khi click nút Apply Filters => addEventListener("click", () => {})
 
-// cần hàm filterEmployess(cần 1 danh sách nhân viên theo điều kiện đã lọc)
+const button = document.getElementById("applyFilters");
+button.addEventListener("click", function() {
+  renderEmployees(filterEmployees(employees));
+});
+
+
+// cần hàm filterEmployees(cần 1 danh sách nhân viên theo điều kiện đã lọc)
+
+function filterEmployees(arr){
+  var employeeCriteria = {name : "", department : "", age : "", salary : ""};
+  const temp = employeeCriteria;
+  employeeCriteria.name = document.getElementById("filterName").value;
+  employeeCriteria.department = departments.options[departments.selectedIndex].text;
+  employeeCriteria.age = document.getElementById("filterAge").value;
+  employeeCriteria.salary = document.getElementById("filterSalary").value;
+  let filtered = arr.filter(
+    (employee) =>
+      (employee.name.includes(employeeCriteria.name)) &&
+      (employee.department == employeeCriteria.department || employeeCriteria.department == "All") &&
+      (employee.age == employeeCriteria.age || employeeCriteria.age == "") &&
+      (employee.salary == employeeCriteria.salary || employeeCriteria.salary == "")
+  );
+  return filtered;
+}
