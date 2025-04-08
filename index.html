@@ -154,6 +154,12 @@
         font-size: 0.9rem;
         margin-top: 0.25rem;
       }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
     </style>
   </head>
   <body>
@@ -213,7 +219,7 @@
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="nameAdd" name="name" />
-            <p class="msg-err" id="errName">Lỗi</p>
+            <p class="msg-err" id="errName"></p>
           </div>
           <div class="form-group">
             <label for="age">Age</label>
@@ -223,11 +229,12 @@
           <div class="form-group">
             <label for="filterDepartment">Department</label>
             <select id="departmentAdd" name="add-department">
-              <option value="1">HR</option>
-              <option value="2">IT</option>
-              <option value="3">Finance</option>
-              <option value="4">Marketing</option>
-              <option value="5">Operations</option>
+              <option value="">Chọn 1 phòng ban</option>
+              <option value="HR">HR</option>
+              <option value="IT">IT</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Operations">Operations</option>
             </select>
             <p class="msg-err" id="errDepartment"></p>
           </div>
