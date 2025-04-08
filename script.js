@@ -1,10 +1,12 @@
-const employees = [
-  { id: 1, name: "Alice", age: 28, salary: 3000, department: "IT" },
-  { id: 2, name: "Bob", age: 34, salary: 3500, department: "HR" },
-  { id: 3, name: "Charlie", age: 25, salary: 2800, department: "IT" },
-  { id: 4, name: "David", age: 45, salary: 4000, department: "Finance" },
-  { id: 5, name: "Eve", age: 30, salary: 3200, department: "IT" },
-];
+// const employees = [
+//   { id: 1, name: "Alice", age: 28, salary: 3000, department: "IT" },
+//   { id: 2, name: "Bob", age: 34, salary: 3500, department: "HR" },
+//   { id: 3, name: "Charlie", age: 25, salary: 2800, department: "IT" },
+//   { id: 4, name: "David", age: 45, salary: 4000, department: "Finance" },
+//   { id: 5, name: "Eve", age: 30, salary: 3200, department: "IT" },
+// ];
+// localStorage.setItem("employees", JSON.stringify(employees));
+const employees = JSON.parse(localStorage.getItem("employees")) || [];
 const tbody = document.querySelector("#listEmployees");
 
 function renderEmployees(listEmployees) {
@@ -83,13 +85,11 @@ let errSalary = document.querySelector("#errSalary");
 function validate(name, age, department, salary) {
   if (name == "") errName.innerHTML = "Vui lòng điền tên";
   else errName.innerHTML = "";
-  if (age < 18 || age > 60 || age == "")
-    errAge.innerHTML = "Tuổi không hợp lệ";
+  if (age < 18 || age > 60 || age == "") errAge.innerHTML = "Tuổi không hợp lệ";
   else errAge.innerHTML = "";
   if (department == "") errDepartment.innerHTML = "Vui lòng chọn phòng ban";
   else errDepartment.innerHTML = "";
-  if (salary < 0 || salary == "")
-    errSalary.innerHTML = "Lương không hợp lệ";
+  if (salary < 0 || salary == "") errSalary.innerHTML = "Lương không hợp lệ";
   else errSalary.innerHTML = "";
   return !(
     errName.innerText ||
@@ -107,8 +107,17 @@ formAddEmployee.addEventListener("submit", function (event) {
   let departmentAdd = document.getElementById("departmentAdd");
   let salaryAdd = document.getElementById("salaryAdd");
   console.log(nameAdd, ageAdd, departmentAdd, salaryAdd);
-  if (!validate(nameAdd.value, ageAdd.value, departmentAdd.value, salaryAdd.value)) return;
-  employees.push({ id: employees.length+1, name: nameAdd.value, age: ageAdd.value, salary: salaryAdd.value, department: departmentAdd.value});
+  if (
+    !validate(nameAdd.value, ageAdd.value, departmentAdd.value, salaryAdd.value)
+  )
+    return;
+  employees.push({
+    id: employees.length + 1,
+    name: nameAdd.value,
+    age: ageAdd.value,
+    salary: salaryAdd.value,
+    department: departmentAdd.value,
+  });
   formAddEmployee.reset();
   renderEmployees(employees);
 });
