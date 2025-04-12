@@ -7,7 +7,7 @@ const employees = [
 ];
 localStorage.setItem("employees", JSON.stringify(employees));
 // const employees = JSON.parse(localStorage.getItem("employees")) || [];
-const tbody = document.querySelector("#listEmployees");
+const tbody = document.querySelector("#listEmployees"); 
 
 
 function renderEmployees(listEmployees) {
@@ -189,6 +189,11 @@ function editEmployee(idEmp){
   currentAge.value = emp.age;
   currentDepartment.value = emp.department;
   currentSalary.value = emp.salary;
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth", // hoặc "auto"
+  });
 }
 
 const updateEmployeeForm = document.getElementById("updateEmployeeForm");
