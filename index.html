@@ -6,6 +6,7 @@
     <title>Employee Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Podkova:wght@400..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
@@ -17,150 +18,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <style>
-      body {
-        font-family: "Roboto", sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-        color: #333333;
-      }
-
-      header {
-        background-color: #ff8c00;
-        color: white;
-        padding: 1.5rem;
-        text-align: center;
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
-
-      .section {
-        margin-bottom: 2.5rem;
-      }
-
-      .section h2 {
-        margin-bottom: 1.5rem;
-        color: #ff8c00;
-        font-size: 1.5rem;
-        border-bottom: 2px solid #ff8c00;
-        display: inline-block;
-        padding-bottom: 0.3rem;
-      }
-
-      .form-group {
-        width: 100%;
-        margin-bottom: 1.5rem;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: bold;
-        color: #333333;
-      }
-
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        padding: 0.8rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1rem;
-      }
-
-      .form-group input:focus,
-      .form-group select:focus {
-        outline: none;
-        border-color: #ff8c00;
-        box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 0.8rem 1.5rem;
-        color: white;
-        background-color: #ff8c00;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease;
-      }
-
-      .btn:hover {
-        background-color: #e67e00;
-      }
-
-      .filter-options {
-        display: flex;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-      }
-
-      .employee-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1.5rem;
-      }
-
-      .employee-table th,
-      .employee-table td {
-        border: 1px solid #ddd;
-        padding: 1rem;
-        text-align: left;
-        font-size: 0.95rem;
-      }
-
-      .employee-table th {
-        background-color: #ff8c00;
-        color: white;
-        font-weight: bold;
-      }
-
-      .employee-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-      }
-
-      .employee-table tr:hover {
-        background-color: #ffe5cc;
-      }
-
-      .employee-table td {
-        color: #333333;
-      }
-
-      h3 {
-        color: #333333;
-        margin-top: 2rem;
-        font-size: 1.3rem;
-        font-weight: bold;
-      }
-
-      .msg-err {
-        color: red;
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
   </head>
   <body>
     <header>
@@ -177,13 +39,13 @@
           </div>
           <div class="filter-group">
             <label for="filterDepartment">Department</label>
-            <select id="departments">
+            <select id="filterDepartment">
               <option value="">All</option>
-              <option value="1">HR</option>
-              <option value="2">IT</option>
-              <option value="3">Finance</option>
-              <option value="4">Marketing</option>
-              <option value="5">Operations</option>
+              <option value="HR">HR</option>
+              <option value="IT">IT</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Operations">Operations</option>
             </select>
           </div>
           <div class="filter-group">
@@ -207,12 +69,27 @@
               <th>Age</th>
               <th>Department</th>
               <th>Salary</th>
-              <th>Action</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody id="listEmployees"></tbody>
         </table>
       </div>
+
+      
+      
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" >
+          <span class="close">&times;</span>
+          <p id = "delText"></p>
+          <div id = "choice"></div>
+        </div>
+      </div>
+
+      
+
       <div class="section">
         <h2>Add Employee</h2>
         <form id="addEmployeeForm">
@@ -227,7 +104,7 @@
             <p class="msg-err" id="errAge"></p>
           </div>
           <div class="form-group">
-            <label for="filterDepartment">Department</label>
+            <label for="department">Department</label>
             <select id="departmentAdd" name="add-department">
               <option value="">Chọn 1 phòng ban</option>
               <option value="HR">HR</option>
@@ -251,10 +128,32 @@
         <h2>Update Employee</h2>
         <form id="updateEmployeeForm">
           <div class="form-group">
-            <label for="updateId">Employee ID</label>
-            <input type="number" id="updateId" name="updateId" required />
+            <label for="id">ID</label>
+            <input type="number" id="idEmp" name="id" readonly />
           </div>
           <div class="form-group">
+            <label for="updateName">Name</label>
+            <input type="text" id="updateName" name="updateName" required />
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="updateAge" name="updateAge" />
+          </div>
+          <div class="form-group">
+            <label for="updateDepartment">Department</label>
+            <select id="updateDepartment" name="add-department">
+              <option value="HR">HR</option>
+              <option value="IT">IT</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Operations">Operations</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="updateSalary">Salary</label>
+            <input type="number" id="updateSalary" name="updateSalary" />
+          </div>
+          <!-- <div class="form-group">
             <label for="updateField">Field to Update</label>
             <select id="updateField" name="updateField" required>
               <option value="name">Name</option>
@@ -262,15 +161,15 @@
               <option value="department">Department</option>
               <option value="salary">Salary</option>
             </select>
-          </div>
-          <div class="form-group">
-            <label for="updateValue">New Value</label>
-            <input type="text" id="updateValue" name="updateValue" required />
-          </div>
-          <button type="submit" class="btn">Update Employee</button>
+          </div> -->
+          <button type="submit" class="btn" id="update">Update Employee</button>
         </form>
       </div>
     </div>
     <script src="./script.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
   </body>
 </html>

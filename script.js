@@ -9,6 +9,7 @@
 const employees = JSON.parse(localStorage.getItem("employees")) || [];
 const tbody = document.querySelector("#listEmployees");
 
+
 function renderEmployees(listEmployees) {
   tbody.innerHTML = "";
   listEmployees.forEach((employee) => {
@@ -30,9 +31,16 @@ function renderEmployees(listEmployees) {
         <td>${employee.salary}</td>
         <td>
           <div
-            style="width: 100%; display: flex; justify-content: center; cursor: pointer;"
+            onclick = "editEmployee(${employee.id})" style="width: 100%; display: flex; justify-content: center; cursor: pointer;" 
           >
             <i class="fa-solid fa-pen"></i>
+          </div>
+        </td>
+        <td>
+          <div
+            id = "deleteButton" onclick = "pendingEmployee(${employee.id})" style="width: 100%; display: flex; justify-content: center; cursor: pointer;" 
+          >
+            <i class="fa-solid fa-trash-can"></i>
           </div>
         </td>
       </tr>
@@ -42,14 +50,17 @@ function renderEmployees(listEmployees) {
 
 renderEmployees(employees);
 
+
+
+
 // Làm sao để lấy được giá trị của input Name => value
 
 // Khi click nút Apply Filters => addEventListener("click", () => {})
 
-const button = document.getElementById("applyFilters");
-button.addEventListener("click", function () {
-  renderEmployees(filterEmployees(employees));
-});
+// Filter employee
+
+const filter = document.getElementById("applyFilters");
+filter.addEventListener("click", () => { renderEmployees(filterEmployees(employees)); });
 
 // cần hàm filterEmployees(cần 1 danh sách nhân viên theo điều kiện đã lọc)
 
@@ -57,15 +68,13 @@ function filterEmployees(arr) {
   var employeeCriteria = { name: "", department: "", age: "", salary: "" };
   const temp = employeeCriteria;
   employeeCriteria.name = document.getElementById("filterName").value;
-  employeeCriteria.department =
-    departments.options[departments.selectedIndex].text;
+  employeeCriteria.department = document.getElementById("filterDepartment").value;
   employeeCriteria.age = document.getElementById("filterAge").value;
   employeeCriteria.salary = document.getElementById("filterSalary").value;
   let filtered = arr.filter(
     (employee) =>
       employee.name.includes(employeeCriteria.name) &&
-      (employee.department == employeeCriteria.department ||
-        employeeCriteria.department == "All") &&
+      (employee.department == employeeCriteria.department || employeeCriteria.department == "") &&
       (employee.age == employeeCriteria.age || employeeCriteria.age == "") &&
       (employee.salary == employeeCriteria.salary ||
         employeeCriteria.salary == "")
@@ -74,6 +83,7 @@ function filterEmployees(arr) {
 }
 
 // Form add Employee
+
 // B1: Lấy các value của input trong form
 const formAddEmployee = document.querySelector("#addEmployeeForm");
 
@@ -115,9 +125,27 @@ formAddEmployee.addEventListener("submit", function (event) {
     id: employees.length + 1,
     name: nameAdd.value,
     age: ageAdd.value,
-    salary: salaryAdd.value,
     department: departmentAdd.value,
+    salary: salaryAdd.value
   });
+
+  // Noti
+  Toastify({
+    text: `Tạo nhân viên ${nameAdd.value} thành công`,
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "bottom", // `top` or `bottom`
+    position: "left", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast();
+
+  localStorage.setItem("employees", JSON.stringify(employees));
   formAddEmployee.reset();
   renderEmployees(employees);
 });
@@ -125,7 +153,150 @@ formAddEmployee.addEventListener("submit", function (event) {
 // B4: Nếu không có lỗi => thêm nhân viên vào danh sách employees
 // B5: Render lại danh sách nhân viên
 
-// nameAdd.addEventListener("input", (e) => {
-//   if (nameAdd == "") errName.innerHTML = "Vui lòng điền tên";
-//   else errName.innerHTML = "";
-// });
+nameAdd.addEventListener("input", (e) => {
+  if (nameAdd.value == "") errName.innerHTML = "Vui lòng điền tên";
+  else errName.innerHTML = "";
+});
+ageAdd.addEventListener("input", (e) => {
+  if (ageAdd.value == "") errAge.innerHTML = "Vui lòng điền tuổi";
+  else errAge.innerHTML = "";
+});
+departmentAdd.addEventListener("input", (e) => {
+  if (departmentAdd.value == "") errDepartment.innerHTML = "Vui lòng chọn phòng ban";
+  else errDepartment.innerHTML = "";
+});
+salaryAdd.addEventListener("input", (e) => {
+  if (salaryAdd.value == "") errSalary.innerHTML = "Vui lòng điền lương";
+  else errSalary.innerHTML = "";
+});
+
+// Form Update Employee
+
+function editEmployee(idEmp){
+  console.log(idEmp);
+  emp = employees.find((employee) => employee.id == idEmp);
+
+  console.log(emp);
+
+  document.getElementById("idEmp").value = emp.id;
+
+  let currentName = document.getElementById("updateName");
+  let currentAge = document.getElementById("updateAge");
+  let currentDepartment = document.getElementById("updateDepartment")
+  let currentSalary = document.getElementById("updateSalary");
+  
+  currentName.value = emp.name;
+  currentAge.value = emp.age;
+  currentDepartment.value = emp.department;
+  currentSalary.value = emp.salary;
+}
+
+const updateEmployeeForm = document.getElementById("updateEmployeeForm");
+updateEmployeeForm.addEventListener("submit", function(event){
+  event.preventDefault();
+})
+
+const update = document.getElementById("update");
+update.addEventListener("click", () => {
+
+  let updatedEmp = employees.find(
+    (employee) => employee.id == document.getElementById("idEmp").value
+  );
+
+  console.log(updatedEmp);  
+  
+  updatedEmp.name = document.getElementById("updateName").value;
+  updatedEmp.age = document.getElementById("updateAge").value;
+  updatedEmp.department = document.getElementById("updateDepartment").value;
+  updatedEmp.salary = document.getElementById("updateSalary").value;
+
+  localStorage.setItem("employees", JSON.stringify(employees));
+  
+  // Noti
+  Toastify({
+    text: "Cập nhật thông tin của nhân viên thành công",
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "center", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast();
+
+  window.scrollTo({
+    top: 200,
+    behavior: "smooth", // hoặc "auto"
+  });
+
+  updateEmployeeForm.reset();
+  renderEmployees(employees);
+})
+
+
+// Delete
+
+function pendingEmployee(idEmp){
+  emp = employees.find((employee) => employee.id == idEmp);
+  var delText = document.getElementById("delText");
+  delText.innerHTML = `Bạn có chắc chắn muốn xóa nhân viên tên <b>${emp.name}</b>, ID: <b>${idEmp}</b>`;
+  modal.style.display = "flex";
+  let choice = document.getElementById("choice");
+  choice.innerHTML = `
+    <button id = "cancel" onclick = "closeModal()">Hủy</button>
+    <button id = "confirm" onclick = "deleteEmployee(${idEmp})">Xác nhận</button>
+  `;
+}
+
+function deleteEmployee(idEmp){
+  employees.splice(idEmp - 1, 1);
+  console.log(employees);
+  localStorage.setItem("employees", JSON.stringify(employees));
+  modal.style.display = "none";
+  renderEmployees(employees);
+
+
+  Toastify({
+    text: "Xóa nhân viên thành công",
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "center", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast();
+}
+
+function closeModal(){
+  console.log("test");
+  modal.style.display = "none";
+}
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+var deleteButton = document.getElementById("deleteButton");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
