@@ -1,12 +1,12 @@
-// const employees = [
-//   { id: 1, name: "Alice", age: 28, salary: 3000, department: "IT" },
-//   { id: 2, name: "Bob", age: 34, salary: 3500, department: "HR" },
-//   { id: 3, name: "Charlie", age: 25, salary: 2800, department: "IT" },
-//   { id: 4, name: "David", age: 45, salary: 4000, department: "Finance" },
-//   { id: 5, name: "Eve", age: 30, salary: 3200, department: "IT" },
-// ];
-// localStorage.setItem("employees", JSON.stringify(employees));
-const employees = JSON.parse(localStorage.getItem("employees")) || [];
+const employees = [
+  { id: 1, name: "Alice", age: 28, salary: 3000, department: "IT" },
+  { id: 2, name: "Bob", age: 34, salary: 3500, department: "HR" },
+  { id: 3, name: "Charlie", age: 25, salary: 2800, department: "IT" },
+  { id: 4, name: "David", age: 45, salary: 4000, department: "Finance" },
+  { id: 5, name: "Eve", age: 30, salary: 3200, department: "IT" },
+];
+localStorage.setItem("employees", JSON.stringify(employees));
+// const employees = JSON.parse(localStorage.getItem("employees")) || [];
 const tbody = document.querySelector("#listEmployees");
 
 
